@@ -2,4 +2,4 @@ name: DeathMaps
 version: 0.0.69
 author: cgs
 main: dev.cgs.deathmaps.DeathMaps
-api-version: 1.17
+api-version: 1.19

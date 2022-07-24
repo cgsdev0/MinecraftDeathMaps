@@ -17,7 +17,9 @@ import org.bukkit.map.MapView;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class DeathMaps extends JavaPlugin implements Listener {
 
@@ -36,6 +38,12 @@ public class DeathMaps extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void onDeath(PlayerRespawnEvent e) {
+        if (!Arrays.stream(e.getPlayer().getInventory().getContents()).allMatch(Objects::isNull)
+                || e.getPlayer().getExp() > 0
+                || e.getPlayer().getStatistic(Statistic.TIME_SINCE_DEATH) > 300) {
+            // They're probably coming back from the End dimension in this case
+            return;
+        }
         Location deathLocation = e.getPlayer().getLastDeathLocation();
         if(deathLocation == null) {
             return;
